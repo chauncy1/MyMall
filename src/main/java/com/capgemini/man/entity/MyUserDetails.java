@@ -1,16 +1,13 @@
 package com.capgemini.man.entity;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * SpringSecurity需要的用户详情
@@ -21,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor 
 public class MyUserDetails implements UserDetails {
     private UserInfo userInfo;
-    private List<UserRole> roleList;
+    private List<RoleInfo> roleList;
 //    private List<SimpleGrantedAuthority> authority;
 
     @Override

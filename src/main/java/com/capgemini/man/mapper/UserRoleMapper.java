@@ -1,11 +1,11 @@
 package com.capgemini.man.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.capgemini.man.entity.RoleInfo;
+
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.capgemini.man.entity.UserRole;
+public interface UserRoleMapper extends BaseMapper<RoleInfo>{
 
-public interface UserRoleMapper extends BaseMapper<UserRole>{
-
-	List<UserRole> getRoleListByUserId(Long userId);
+	List<RoleInfo> getRoleListByUserId(Long userId);
 }

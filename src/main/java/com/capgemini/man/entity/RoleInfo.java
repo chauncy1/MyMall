@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRole implements GrantedAuthority{
+public class RoleInfo implements GrantedAuthority{
 	private static final long serialVersionUID = 7088351652237386029L;
 
 	private Long roleId;
