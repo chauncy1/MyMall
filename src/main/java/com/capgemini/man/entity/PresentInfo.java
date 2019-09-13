@@ -9,19 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfo implements Serializable{
+public class PresentInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private Long presentId;
+	private String presentName;
+	private Integer presentCount;
+	private Integer presentScore;
+	private String presentDesc;
 
-	private Long userId;
-	
-	private String userAccount;
-	
-    private String userName;
-    
-    private String userPassword;
-    
-    private String userDetail;
-    
-    private Integer userScore;
-	
 }

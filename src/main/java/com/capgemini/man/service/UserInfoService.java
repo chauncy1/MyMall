@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.capgemini.man.entity.UserInfo;
 import com.capgemini.man.mapper.UserInfoMapper;
 
@@ -20,6 +21,9 @@ public class UserInfoService{
 	
 	@Autowired
 	RedisTemplate<String, ?> redisTemplate;
+	
+	@Autowired
+	StringRedisTemplate stringRedisTemplate;
 	
 	/**
 	 * 使用存入redis的方式加快查询，使用了JSON，快了吗？
@@ -68,6 +72,28 @@ public class UserInfoService{
 
 	public int addUserInfoWithLock(UserInfo user) {
 		int result = userInfoMapper.insert(user);
+		return result;
+	}
+	
+	public int update(UserInfo user) {
+		return userInfoMapper.updateById(user);
+	}
+
+	public int minusUserScore(String id, Integer score) {
+		//上锁
+		Boolean x = stringRedisTemplate.opsForValue().setIfAbsent(id, id, 5, TimeUnit.MINUTES);
+		if(x == false) {
+			return minusUserScore(id,score);
+		}
+		
+		//减分
+		UserInfo user = new UserInfo();
+		user.setUserId(Long.valueOf(id));
+		user.setUserScore(score);
+		int result = userInfoMapper.minusUserScore(user);
+		
+		//解锁
+		stringRedisTemplate.delete(id);
 		return result;
 	}
  }

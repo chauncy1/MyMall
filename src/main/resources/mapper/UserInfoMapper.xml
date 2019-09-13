@@ -6,4 +6,10 @@
     <select id="getIdName" resultMap="user">
         SELECT  user_id,user_name FROM user_info
     </select>
+    
+    <update id="minusUserScore" parameterType="com.capgemini.man.entity.UserInfo">
+    	UPDATE user_info u 
+    	SET u.user_score = u.user_score - #{userScore} 
+    	WHERE u.user_id = #{userId}
+    </update>
 </mapper>

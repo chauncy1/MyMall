@@ -16,7 +16,7 @@ import com.capgemini.man.service.UserInfoService;
 import com.capgemini.man.service.UserRoleService;
 
 @RestController
-@RequestMapping("/userinfo")
+@RequestMapping("/user")
 public class UserInfoContoller {
 
 	@Autowired
@@ -48,5 +48,15 @@ public class UserInfoContoller {
 	@PostMapping("/add")
 	public int addUserInfoWithLock(@RequestBody UserInfo user) {
 		return userInfoService.addUserInfoWithLock(user);
+	}
+	
+	@PostMapping("/update")
+	public int minusUserScore(@RequestParam UserInfo user) {
+		return userInfoService.update(user);
+	}
+	
+	@PostMapping("/minusScore")
+	public int minusUserScore(@RequestParam String userId, @RequestParam Integer score) {
+		return userInfoService.minusUserScore(userId, score);
 	}
 }

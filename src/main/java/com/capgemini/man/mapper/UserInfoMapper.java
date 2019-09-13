@@ -7,4 +7,6 @@ import com.capgemini.man.entity.UserInfo;
 
 public interface UserInfoMapper extends BaseMapper<UserInfo>{
 	List<UserInfo> getIdName();
+	
+	int minusUserScore(UserInfo user);
 }
