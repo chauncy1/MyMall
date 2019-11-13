@@ -1,15 +1,15 @@
 package com.capgemini.man.service;
 
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.capgemini.man.entity.PresentInfo;
 import com.capgemini.man.mapper.PresentMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class PresentService {
@@ -20,7 +20,7 @@ public class PresentService {
 	StringRedisTemplate stringRedisTemplate;
 
 	public int minusPresentCount(String id, Integer count) {
-		//在java中判断>0没用 还是会出现负数
+	    //在java中判断>0没用 还是会出现负数
 //		PresentInfo judge = selectById(id);
 //		if(judge.getPresentCount() - count < 0) {
 //			return 0;
@@ -31,16 +31,17 @@ public class PresentService {
 		int result = presentMapping.minusPresentCount(pres);
 		return result;
 		
-		//redis分布式锁  慢的一批
-//		if(stringRedisTemplate.opsForValue().setIfAbsent(id, id, 5, TimeUnit.MINUTES)) {
-//			int result = presentMapping.minusPresentCount(pres);
-//			stringRedisTemplate.delete(id);
-//			return result;
+		//redis分布式锁 有错
+//		synchronized (this) {
+//			if(stringRedisTemplate.opsForValue().setIfAbsent(id, id, 5, TimeUnit.MINUTES)) {
+//				int result = presentMapping.minusPresentCount(pres);
+//				stringRedisTemplate.delete(id);
+//				return result;
+//			}
+//			RamdomSleep();
+//			return minusPresentCount(id, count);
 //		}
-//		RamdomSleep();
-//		return minusPresentCount(id, count);
-		
-		
+
 	}
 	
 	public void RamdomSleep() {

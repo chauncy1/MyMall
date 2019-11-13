@@ -7,7 +7,7 @@
     <update id="minusPresentCount" parameterType="com.capgemini.man.entity.PresentInfo">
     	UPDATE present_info p 
     	SET p.present_count = p.present_count - #{presentCount} 
-    	WHERE p.present_id = #{presentId} 
-   		AND p.present_count - #{presentCount} > 0 <!-- 基于数据库的乐观锁 -->
+    	WHERE p.present_id = #{presentId}
+		AND p.present_count - #{presentCount} > 0  <!--基于数据库的乐观锁 -->
     </update>
 </mapper>
