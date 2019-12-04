@@ -4,7 +4,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/mybatis_plus?characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     #最大活跃数
@@ -31,14 +31,15 @@ spring:
     database: 0
     host: 127.0.0.1
     port: 6379
-#    password: 123456
-    timeout: 60
+    password: 123456
+    timeout: 6000
     lettuce:
       pool:
-        max-active: 8
+        max-active: 16
         max-wait: -1
         max-idle: 8
- #ElasticSearch
+        min-idle: 0
+  #ElasticSearch
   data:
     elasticsearch:
       repositories:
@@ -46,13 +47,12 @@ spring:
       cluster-nodes: 127.0.0.1:9300 # es的连接地址及端口号
       cluster-name: elasticsearch # es集群的名称
   main:
-    allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: true # 某个bug
 logging:
   level:
-    com:
-      capgemini:
-        man:
-          mapper: debug
+    net:
+      man:
+        mapper: debug
 secretKey: ZGFpbWxlcg==
 
  
