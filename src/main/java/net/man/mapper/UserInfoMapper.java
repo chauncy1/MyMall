@@ -1,7 +1,7 @@
 package net.man.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import net.man.DO.UserInfo;
+import net.man.entity.UserInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

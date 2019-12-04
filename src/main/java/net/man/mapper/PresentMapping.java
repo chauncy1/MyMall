@@ -1,7 +1,7 @@
 package net.man.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import net.man.DO.PresentInfo;
+import net.man.entity.PresentInfo;
 import org.springframework.stereotype.Repository;
 
 @Repository

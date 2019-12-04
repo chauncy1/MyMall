@@ -3,7 +3,7 @@ package net.man.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import net.man.DO.UserInfo;
+import net.man.entity.UserInfo;
 import net.man.mapper.UserInfoMapper;
 import net.man.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;

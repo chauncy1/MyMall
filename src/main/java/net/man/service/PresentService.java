@@ -3,7 +3,7 @@ package net.man.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
-import net.man.DO.PresentInfo;
+import net.man.entity.PresentInfo;
 import net.man.mapper.PresentMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -29,6 +29,13 @@ public class PresentService {
 
 	private static Semaphore semaphore = new Semaphore(1);
 
+	/**
+	 * 无锁
+	 * @param id
+	 * @param count
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public int minusPresentCount(String id, Integer count) throws InterruptedException {
 		//注意并发
 		PresentInfo judge = selectById(id);
@@ -42,6 +49,13 @@ public class PresentService {
 
 	}
 
+	/**
+	 * 单机加锁
+	 * @param id
+	 * @param count
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public int minusPresentCountBySemaphore(String id, Integer count) throws InterruptedException {
 		// 信号量大法
 		semaphore.acquire();
@@ -61,6 +75,13 @@ public class PresentService {
 
 	}
 
+	/**
+	 * opsForValue().setIfAbsent不能用来作为锁？
+	 * @param id
+	 * @param count
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public int minusPresentCountByRedis(String id, Integer count) throws InterruptedException {
 		PresentInfo pres = new PresentInfo();
 		pres.setPresentId(Long.valueOf(id));
@@ -85,26 +106,33 @@ public class PresentService {
 
 	}
 
+	/**
+	 * Spring Integration分布式锁
+	 * @param id
+	 * @param count
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public int minusPresentCountByRedisLock(String id, Integer count) throws InterruptedException {
+		int res = 0;
 		PresentInfo pres = new PresentInfo();
 		pres.setPresentId(Long.valueOf(id));
 		pres.setPresentCount(count);
 
-		//redis integretion分布式锁
+		//redis integration分布式锁
 		Lock lock = redisLockRegistry.obtain("minus-present");
-		if (lock.tryLock(60, TimeUnit.SECONDS)){
+		if (lock.tryLock(3, TimeUnit.SECONDS)){ // 等待锁 3s
 			try {
-				PresentInfo judge = selectById(id);
-				if (judge.getPresentCount() - count < 0) {
+				// 如果库存不足，则不更新
+				if (this.selectById(id).getPresentCount() - count < 0) {
 					return 0;
 				}
-				return presentMapping.minusPresentCount(pres);
+				res = presentMapping.minusPresentCount(pres);
 			} finally {
 				lock.unlock();
 			}
 		}
-		RamdomSleep();
-		return minusPresentCount(id, count);
+		return res;
 	}
 
 	public void RamdomSleep() {

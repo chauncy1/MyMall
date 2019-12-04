@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.man.mapper.UserRoleMapper">
-	<resultMap id="RoleBaseMap" type="net.man.DO.RoleInfo">
+	<resultMap id="RoleBaseMap" type="net.man.entity.RoleInfo">
         <id property="roleId" column="role_id" />
         <result property="roleName" column="role_name" />
         <result property="roleDesc" column="role_desc" />

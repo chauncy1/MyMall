@@ -1,6 +1,6 @@
 package net.man.service;
 
-import net.man.DO.RoleInfo;
+import net.man.entity.RoleInfo;
 import net.man.mapper.UserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

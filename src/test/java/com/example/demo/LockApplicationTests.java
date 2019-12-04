@@ -2,7 +2,7 @@ package com.example.demo;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.man.DO.PresentInfo;
+import net.man.entity.PresentInfo;
 import net.man.MallApplication;
 import net.man.service.PresentService;
 import org.junit.Before;

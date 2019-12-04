@@ -52,7 +52,7 @@ logging:
   level:
     net:
       man:
-        mapper: debug
+        mapper: INFO
 secretKey: ZGFpbWxlcg==
 
  

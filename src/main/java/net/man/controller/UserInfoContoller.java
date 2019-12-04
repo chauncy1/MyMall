@@ -1,7 +1,7 @@
 package net.man.controller;
 
-import net.man.DO.RoleInfo;
-import net.man.DO.UserInfo;
+import net.man.entity.RoleInfo;
+import net.man.entity.UserInfo;
 import net.man.service.UserInfoService;
 import net.man.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

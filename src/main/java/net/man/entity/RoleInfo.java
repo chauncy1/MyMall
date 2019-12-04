@@ -1,4 +1,4 @@
-package net.man.DO;
+package net.man.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

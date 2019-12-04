@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.man.mapper.PresentMapping">
-    <resultMap id="user" type="net.man.DO.PresentInfo"/>
+    <resultMap id="user" type="net.man.entity.PresentInfo"/>
 
     
-    <update id="minusPresentCount" parameterType="net.man.DO.PresentInfo">
+    <update id="minusPresentCount" parameterType="net.man.entity.PresentInfo">
     	UPDATE present_info p 
     	SET p.present_count = p.present_count - #{presentCount} 
     	WHERE p.present_id = #{presentId}

@@ -1,7 +1,7 @@
 package net.man.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import net.man.DO.RoleInfo;
+import net.man.entity.RoleInfo;
 
 import java.util.List;
 

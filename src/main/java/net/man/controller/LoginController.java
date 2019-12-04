@@ -1,6 +1,6 @@
 package net.man.controller;
 
-import net.man.DO.UserInfo;
+import net.man.entity.UserInfo;
 import net.man.DTO.JWTInfoDTO;
 import net.man.controller.response.BaseResponse;
 import net.man.service.UserInfoService;

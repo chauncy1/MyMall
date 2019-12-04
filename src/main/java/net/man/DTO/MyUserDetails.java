@@ -3,8 +3,8 @@ package net.man.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.man.DO.RoleInfo;
-import net.man.DO.UserInfo;
+import net.man.entity.RoleInfo;
+import net.man.entity.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
