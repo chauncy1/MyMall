@@ -76,19 +76,21 @@ public class PresentService {
 	}
 
 	/**
-	 * opsForValue().setIfAbsent不能用来作为锁？
+	 * opsForValue().setIfAbsent分布式锁
+	 * setIfAbsent处理太慢，让每个线程多重试3次
 	 * @param id
 	 * @param count
 	 * @return
 	 * @throws InterruptedException
 	 */
 	public int minusPresentCountByRedis(String id, Integer count) throws InterruptedException {
+		int result = 0;
 		PresentInfo pres = new PresentInfo();
 		pres.setPresentId(Long.valueOf(id));
 		pres.setPresentCount(count);
-		//redis分布式锁 有错
-		if (stringRedisTemplate.opsForValue().setIfAbsent(id, id, 5L, TimeUnit.MINUTES)) {
-			int result = 0;
+
+		//redis分布式锁
+		if (stringRedisTemplate.opsForValue().setIfAbsent(id, id, 3L, TimeUnit.SECONDS)) {
 			try {
 				PresentInfo judge = selectById(id);
 				if (judge.getPresentCount() - count < 0) {
@@ -100,9 +102,8 @@ public class PresentService {
 			}
 			return result;
 		}
-
-		RamdomSleep();
-		return minusPresentCount(id, count);
+		this.RamdomSleep();
+		return minusPresentCountByRedis(id, count);
 
 	}
 
@@ -135,6 +136,9 @@ public class PresentService {
 		return res;
 	}
 
+	/**
+	 * 削峰填谷
+	 */
 	public void RamdomSleep() {
 		try {
 			Thread.sleep(new Random().nextInt(10) + 1);

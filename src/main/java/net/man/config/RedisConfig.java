@@ -3,23 +3,34 @@ package net.man.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.integration.redis.util.RedisLockRegistry;
 
 /**
  * Redis的序列化
  * @author chaman
  *
  */
+@Slf4j
 @Configuration
-public class RedisTemplateConfig {
+public class RedisConfig {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	/**
+	 * 注册redis分布式锁
+	 * @param redisConnectionFactory
+	 * @return
+	 */
+	@Bean
+	public RedisLockRegistry redisLockRegistry(RedisConnectionFactory redisConnectionFactory) {
+		// redis lock survive 5s
+		return new RedisLockRegistry(redisConnectionFactory, "mall-lock", 5000L);
+	}
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory redisConnectionFactory){
@@ -34,7 +45,7 @@ public class RedisTemplateConfig {
 		redisTemplate.setHashKeySerializer(jackson2JsonRedisSerializer);
 		redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
 		redisTemplate.afterPropertiesSet();
-		logger.info("RedisTemplate序列化配置，转化方式：" + jackson2JsonRedisSerializer.getClass().getName());
+		log.info("RedisTemplate序列化配置，转化方式：" + jackson2JsonRedisSerializer.getClass().getName());
 		return redisTemplate;
 	}
 }

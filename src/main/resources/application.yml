@@ -8,7 +8,7 @@ spring:
     username: root
     password: 123456
     #最大活跃数
-    maxActive: 20
+    maxActive: 16
     #初始化数量
     initialSize: 1
     #最大连接等待超时时间
@@ -38,7 +38,7 @@ spring:
         max-active: 16
         max-wait: -1
         max-idle: 8
-        min-idle: 0
+        min-idle: 1
   #ElasticSearch
   data:
     elasticsearch:
