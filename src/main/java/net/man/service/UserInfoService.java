@@ -31,6 +31,7 @@ public class UserInfoService {
 	/**
 	 * 使用存入redis的方式加快查询
 	 * update和delete操作也要更新redis，否则会有缓存时效性问题
+	 *
 	 * @return
 	 */
 	public List<UserInfo> selectAllWithRedis() {
@@ -95,23 +96,15 @@ public class UserInfoService {
 		return userInfoMapper.updateById(user);
 	}
 
-	public int minusUserScore(String id, Integer score) {
+	public int minusUserScoreByRedis(String userId, Integer score) {
 		int result = 0;
-		//上锁
-//		Boolean x = stringRedisTemplate.opsForValue().setIfAbsent(id, id, 5, TimeUnit.MINUTES);
-		try{
-//			if (x == false) {
-////				return minusUserScore(id, score);
-////			}
-			//减分
-			UserInfo user = new UserInfo();
-			user.setUserId(Long.valueOf(id));
-			user.setUserScore(score);
-			result = userInfoMapper.minusUserScore(user);
-		}finally {
-			//解锁
-//			stringRedisTemplate.delete(id);
+		UserInfo user = this.selectById(userId);
+		user.setUserScore(score);
+
+		if (user.getUserScore() - score < 0) {
+			return -1;
 		}
+		result = userInfoMapper.minusUserScore(user);
 		return result;
 	}
 }

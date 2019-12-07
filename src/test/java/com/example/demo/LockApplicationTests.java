@@ -22,7 +22,7 @@ public class LockApplicationTests {
 	PresentService presentService;
 
 	private static final int USER_NUM = 100;//总人数
-	private static final int P_COUNT = 100;//商品总数
+	private static final Integer P_COUNT = 100;//商品总数
 	private static final String P_ID = "1";//商品id
 
 	private static int successPreson = 0;

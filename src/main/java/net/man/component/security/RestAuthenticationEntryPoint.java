@@ -1,4 +1,4 @@
-package net.man.component;
+package net.man.component.security;
 
 import com.alibaba.fastjson.JSONObject;
 import net.man.common.result.CommonResult;

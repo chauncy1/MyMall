@@ -1,6 +1,6 @@
 package net.man.service;
 
-import net.man.DTO.MyUserDetails;
+import net.man.dto.MyUserDetails;
 import net.man.entity.RoleInfo;
 import net.man.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;

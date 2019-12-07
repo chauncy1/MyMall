@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import net.man.component.JwtAuthenticationTokenFilter;
-import net.man.component.RestAuthenticationEntryPoint;
-import net.man.component.RestfulAccessDeniedHandler;
+import net.man.component.security.JwtAuthenticationTokenFilter;
+import net.man.component.security.RestAuthenticationEntryPoint;
+import net.man.component.security.RestfulAccessDeniedHandler;
 
 /**
  * SpringSecurity的配置 Created by macro on 2018/4/26.

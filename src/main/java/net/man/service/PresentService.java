@@ -81,9 +81,8 @@ public class PresentService {
 	 * @param id
 	 * @param count
 	 * @return
-	 * @throws InterruptedException
 	 */
-	public int minusPresentCountByRedis(String id, Integer count) throws InterruptedException {
+	public int minusPresentCountByRedis(String id, Integer count) {
 		int result = 0;
 		PresentInfo pres = new PresentInfo();
 		pres.setPresentId(Long.valueOf(id));
@@ -94,7 +93,7 @@ public class PresentService {
 			try {
 				PresentInfo judge = selectById(id);
 				if (judge.getPresentCount() - count < 0) {
-					return 0;
+					return -1;
 				}
 				result = presentMapping.minusPresentCount(pres);
 			} finally {

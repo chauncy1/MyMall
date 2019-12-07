@@ -52,7 +52,7 @@ public class UserInfoContoller {
 	}
 	
 	@PostMapping("/minusScore")
-	public int minusUserScore(@RequestParam String userId, @RequestParam Integer score) {
-		return userInfoService.minusUserScore(userId, score);
+	public int minusUserScoreByRedis(@RequestParam String userId, @RequestParam Integer score) {
+		return userInfoService.minusUserScoreByRedis(userId, score);
 	}
 }

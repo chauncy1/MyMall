@@ -1,6 +1,6 @@
 package net.man.service;
 
-import net.man.DTO.EsProductDTO;
+import net.man.dto.EsProductDTO;
 import net.man.mapper.EsProductMapper;
 import net.man.mapper.EsProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

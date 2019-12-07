@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import net.man.DTO.EsProductDTO;
+import net.man.dto.EsProductDTO;
 
 
 public interface EsProductRepository extends ElasticsearchRepository<EsProductDTO,Long>{

@@ -1,4 +1,4 @@
-package net.man.component;
+package net.man.component.security;
 
 import net.man.service.JWTRedisService;
 import net.man.util.JWTUtil;

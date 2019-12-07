@@ -1,6 +1,6 @@
 package net.man.controller;
 
-import net.man.DTO.EsProductDTO;
+import net.man.dto.EsProductDTO;
 import net.man.common.result.CommonResult;
 import net.man.service.ESProductService;
 import org.springframework.beans.factory.annotation.Autowired;

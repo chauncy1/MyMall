@@ -1,6 +1,6 @@
 package net.man.service;
 
-import net.man.DTO.JWTInfoDTO;
+import net.man.dto.JWTInfoDTO;
 import net.man.common.constant.RedisConstant;
 import net.man.util.JWTUtil;
 import io.jsonwebtoken.Claims;

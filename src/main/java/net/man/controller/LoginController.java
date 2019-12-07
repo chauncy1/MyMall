@@ -1,7 +1,7 @@
 package net.man.controller;
 
 import net.man.entity.UserInfo;
-import net.man.DTO.JWTInfoDTO;
+import net.man.dto.JWTInfoDTO;
 import net.man.controller.response.BaseResponse;
 import net.man.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;

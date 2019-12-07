@@ -16,9 +16,9 @@ public class PresentController {
 
 	@Autowired
 	PresentService presentService;
-	
+
 	@PostMapping("/minusCount")
-	public int minusPresentCount(@RequestParam String id,@RequestParam Integer count) {
+	public int minusPresentCount(@RequestParam String id, @RequestParam Integer count) {
 		int result = 0;
 		try {
 			result = presentService.minusPresentCount(id, count);
@@ -29,19 +29,15 @@ public class PresentController {
 	}
 
 	@PostMapping("/minusCountRedis")
-	public int minusPresentCountbyRedis(@RequestParam String id,@RequestParam Integer count) {
+	public int minusPresentCountbyRedis(@RequestParam String id, @RequestParam Integer count) {
 		int result = 0;
-		try {
-			result = presentService.minusPresentCountByRedis(id, count);
-			log.info("minusCountRedis result: " + result);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		result = presentService.minusPresentCountByRedis(id, count);
+		log.info("minusCountRedis result: " + result);
 		return result;
 	}
 
 	@PostMapping("/minusCountSema")
-	public int minusPresentCountbySemaphore(@RequestParam String id,@RequestParam Integer count) {
+	public int minusPresentCountbySemaphore(@RequestParam String id, @RequestParam Integer count) {
 		int result = 0;
 		try {
 			result = presentService.minusPresentCountBySemaphore(id, count);
@@ -53,7 +49,7 @@ public class PresentController {
 	}
 
 	@PostMapping("/minusCountInte")
-	public int minusPresentCountbyRedis2(@RequestParam String id,@RequestParam Integer count) {
+	public int minusPresentCountbyRedis2(@RequestParam String id, @RequestParam Integer count) {
 		int result = 0;
 		try {
 			result = presentService.minusPresentCountByRedisLock(id, count);

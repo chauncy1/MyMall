@@ -1,6 +1,7 @@
 package net.man.common.result;
 
 import lombok.Data;
+import net.man.common.enumerate.ResultCode;
 
 /**
  * 通用返回对象
@@ -15,7 +16,7 @@ public class CommonResult<T> {
     protected CommonResult() {
     }
 
-    protected CommonResult(long code, String message, T data) {
+    public CommonResult(long code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
