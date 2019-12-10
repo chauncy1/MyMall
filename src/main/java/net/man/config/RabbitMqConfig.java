@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
+	/****************************************************** Direct *****************************************************************/
+
 	/**
 	 * 订单消息实际消费队列所绑定的交换机
 	 */
@@ -58,7 +60,7 @@ public class RabbitMqConfig {
 	 * 将订单队列绑定到交换机
 	 */
 	@Bean
-	Binding orderBinding(DirectExchange orderDirect, Queue orderQueue) {
+		Binding orderBinding(DirectExchange orderDirect, Queue orderQueue) {
 		return BindingBuilder
 				.bind(orderQueue)
 				.to(orderDirect)
@@ -76,33 +78,74 @@ public class RabbitMqConfig {
 				.with(QueueEnum.QUEUE_TTL_ORDER_CANCEL.getRouteKey());
 	}
 
+	/******************************************************** Topic *****************************************************************/
+
 	/**
-	 * 普通消息队列，普普通通的收发消息
-	 * @return
+	 * 商城Topic消息队列，绑定Topic交换机
 	 */
 	@Bean
-	public Queue normalMessage() {
-		return new Queue(QueueEnum.QUEUE_NORMAL.getName());
+	public Queue topicMessageMall() {
+		return new Queue(QueueEnum.QUEUE_MALL_ACTION.getName());
 	}
 
 	/**
-	 * 普普通通的交换机
-	 * @return
+	 * 支付Topic消息队列，绑定Topic交换机
 	 */
 	@Bean
-	DirectExchange normalDirect(){
+	public Queue topicMessagePay() {
+		return new Queue(QueueEnum.QUEUE_MALL_PAY.getName());
+	}
+
+	/**
+	 * 微信Topic消息队列，绑定Topic交换机
+	 */
+	@Bean
+	public Queue topicMessageWechat() {
+		return new Queue(QueueEnum.QUEUE_MALL_WECHAT.getName());
+	}
+
+	/**
+	 * topic交换机
+	 */
+	@Bean
+	TopicExchange topicExchange(){
 		return ExchangeBuilder
-				.directExchange(QueueEnum.QUEUE_NORMAL.getExchange())
+				.topicExchange(QueueEnum.QUEUE_MALL_ACTION.getExchange())
 				.durable(true)
 				.build();
 	}
 
+	/**
+	 * topic交换机绑定商城队列
+	 */
 	@Bean
-	Binding normalBinding(Queue normalMessage, DirectExchange normalDirect){
+	Binding topicBindingMall(Queue topicMessageMall, TopicExchange topicExchange){
 		return BindingBuilder
-				.bind(normalMessage)
-				.to(normalDirect)
-				.with(QueueEnum.QUEUE_NORMAL.getRouteKey());
+				.bind(topicMessageMall)
+				.to(topicExchange)
+				.with(QueueEnum.QUEUE_MALL_ACTION.getRouteKey());
+	}
+
+	/**
+	 * topic交换机绑定支付队列
+	 */
+	@Bean
+	Binding topicBindingPay(Queue topicMessagePay, TopicExchange topicExchange){
+		return BindingBuilder
+				.bind(topicMessagePay)
+				.to(topicExchange)
+				.with(QueueEnum.QUEUE_MALL_PAY.getRouteKey());
+	}
+
+	/**
+	 * topic交换机绑定微信队列
+	 */
+	@Bean
+	Binding topicBindingWechat(Queue topicMessageWechat, TopicExchange topicExchange){
+		return BindingBuilder
+				.bind(topicMessageWechat)
+				.to(topicExchange)
+				.with(QueueEnum.QUEUE_MALL_WECHAT.getRouteKey());
 	}
 
 }

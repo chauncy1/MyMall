@@ -17,9 +17,19 @@ public class MqController {
 	@Autowired
 	MqService mqService;
 
-	@PostMapping("/send")
-	public CommonResult<String> sendToNormalQueue(@RequestParam String message){
-		return mqService.sendMessage(message);
+	@PostMapping("/pay")
+	public CommonResult<String> payAction(@RequestParam String message, @RequestParam String userName, @RequestParam String source){
+		return mqService.payAction(message, userName, source);
+	}
+
+	@PostMapping("/login")
+	public CommonResult<String> loginAction(@RequestParam String message, @RequestParam String userName, @RequestParam String source){
+		return mqService.loginAction(message, userName, source);
+	}
+
+	@PostMapping("/casual")
+	public CommonResult<String> casual(){
+		return mqService.casual();
 	}
 
 }

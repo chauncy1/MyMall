@@ -14,10 +14,20 @@ public enum QueueEnum {
 	 * 消息通知延时队列
 	 */
 	QUEUE_TTL_ORDER_CANCEL("mall.order.direct.ttl", "mall.order.cancel.ttl", "mall.order.cancel.ttl"),
+
 	/**
-	 * 普通消息队列
+	 * Topic消息队列 :
+	 *      *表示一个词.
+	 *      #表示零个或多个词.
 	 */
-	QUEUE_NORMAL("mall.normal.direct", "mall.normal.queue", "mall.normal.queue");
+	// 商城大队列
+	QUEUE_MALL_ACTION("mall.topic.direct", "mall.all", "mall.#"),
+	// 商城 支付行为
+	QUEUE_MALL_PAY("mall.topic.direct", "mall.pay", "mall.pay.#"),
+	// 商城 微信行为
+	QUEUE_MALL_WECHAT("mall.topic.direct", "mall.wechat", "mall.*.wechat.#"),
+
+	;
 	/**
 	 * 交换名称
 	 */
