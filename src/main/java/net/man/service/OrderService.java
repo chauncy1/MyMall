@@ -19,6 +19,27 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+package net.man.service;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
+import net.man.common.enumerate.OrderStatusEnum;
+import net.man.common.result.CommonResult;
+import net.man.component.mq.CancelOrderSender;
+import net.man.web.controller.request.OrderRequest;
+import net.man.entity.OrderInfo;
+import net.man.entity.PresentInfo;
+import net.man.mapper.OrderInfoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
+
+@Slf4j
+@Service
 public class OrderService {
 
 	@Autowired
@@ -34,23 +55,23 @@ public class OrderService {
 	PresentService presentService;
 
 	@Transactional
-	public CommonResult generateOrder(OrderRequest orderRequest) {
+	public CommonResult generateOrder(Long userId, Long presentId, Integer presentCount) {
 		log.info("process generateOrder");
 
 		//减礼品数量
-		int pResult = presentService.minusPresentCountByRedis(String.valueOf(orderRequest.getPresentId()), orderRequest.getPresentCount());
+		int pResult = presentService.minusPresentCountByRedis(String.valueOf(presentId), presentCount);
 		if (pResult < 0) {
 			return CommonResult.failed("库存不足");
 		}
 
 		//生成订单信息
-		PresentInfo presentInfo = presentService.selectById(String.valueOf(orderRequest.getPresentId()));
+		PresentInfo presentInfo = presentService.selectById(String.valueOf(presentId));
 		String orderId = String.valueOf(UUID.randomUUID());
 		OrderInfo orderInfo = new OrderInfo(orderId,
-				orderRequest.getUserId(),
-				orderRequest.getPresentId(),
-				orderRequest.getPresentCount(),
-				presentInfo.getPresentScore() * orderRequest.getPresentCount(),
+				userId,
+				presentId,
+				presentCount,
+				presentInfo.getPresentScore() * presentCount,
 				OrderStatusEnum.NO_PAID.getStatus());
 		orderInfo.setCreateBy(userInfoService.selectById(String.valueOf(orderInfo.getUserId())).getUserName());
 		orderInfo.setCreateTime(new Date());
